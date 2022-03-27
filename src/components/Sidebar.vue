@@ -6,16 +6,16 @@
                             <img src="../images/Sidebar-logo.png" alt="Elephant head" />
                         </div>
                         <div v-if="showTable" class="sidebar-links">
-                            <div class="slinks active">
-                                <p class="home-link " @click="setShowTable">Home</p>
+                            <div class="slinks active" id="home-cursor" @click="setShowTable">
+                                <p class="home-link" >Home</p>
                             </div>
                             <div class="slinks" >
                                 <p class="home-link">Elephant</p>
                             </div>
                         </div>
                         <div v-if="!showTable" class="sidebar-links">
-                            <div class="slinks">
-                                <p class="home-link " @click="setShowTable">Home</p>
+                            <div class="slinks" id="home-cursor" @click="setShowTable">
+                                <p class="home-link">Home</p>
                             </div>
                             <div class="slinks active" >
                                 <p class="home-link">Elephant</p>
