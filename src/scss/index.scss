@@ -15,6 +15,18 @@ p{
     line-height: 23px;
 }
 
+.loader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    font-size: 2vw;
+}
+
+
+
 .container{
     display: flex;
     justify-content: space-between;
@@ -144,7 +156,7 @@ p{
                     flex-direction: row;
                     width: 900px;
                     td{
-                        width: 90px;
+                        width: 60px;
                     }
                     &:hover{
                         font-weight: 600;
@@ -160,6 +172,11 @@ p{
                     &:hover{
                         cursor: pointer;
                     }
+                    tr{
+                        &:hover{
+                            background-color: #bebebe;
+                        }
+                    }
                 }
             }
         }
@@ -168,16 +185,36 @@ p{
             justify-content: center;
             align-items: center;
             padding: 20px;
+            padding-bottom: 5px;
             .page-btn-container{
                 width: 100%;
                 display: flex;
                 justify-content: space-evenly;
+                align-items: center;
+                .page-btn{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .disabled{
+                    background: #919EAB;
+                    opacity: 0.5;
+                    color: #C4CDD5;
+                }
+                .activePageBtn{
+                    background: #FFFFFF;
+                    border: 1px solid #0546E0;
+                    box-sizing: border-box;
+                    color: #0546E0;
+                }
                 button{
                     background-color: white;
-                    color: #0546E0;
-                    outline: none;
                     border: 1px solid #DFE3E8;
-                    margin-left: 5px
+                    outline: none;
+                    margin-left: 5px;
+                    border-radius: 4px;
+                    width: 32px;
+                    height: 32px;
                 }
             }
         }
@@ -196,7 +233,8 @@ p{
             padding-bottom: 0px;
             padding-left: 0px;
             padding-right: 0px;
-            width: 90%;
+            width: 70%;
+            margin-left: 10px;
             &::after{
                 position: absolute;
                 content: "";
@@ -220,13 +258,16 @@ p{
             border-bottom: 1px solid black;
             align-items: center;
             h1{
-                font-size: 35px;
                 color: #30425A;
-                font-weight: bold;
+                font-weight: 700;
+                font-size: 48px;
                 line-height: 61px;
+                height: 74px;
+                margin-top: 29px;
+                margin-bottom: 29px;
             }
             p{
-                height: 7px;
+                height: 15px;
             }
         }
         .elephant-notes{
@@ -239,6 +280,11 @@ p{
             width: 90%;
             p{
                 margin: 5px;
+                font-weight: 400;
+                font-size: 24px;
+                line-height: 30px;
+
+                color: #30425A;
             }
         }
     }
@@ -297,7 +343,7 @@ p{
             }
             .pagination-container{
                 .page-btn-container{
-                    width: 50%;
+                    width: 35%;
                 }
             }
         }

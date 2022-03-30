@@ -2,13 +2,13 @@
     <section class="rhs">
                 <div class="rhs-container">
                     <breadcrumb @toggle-sidebar="toggleSidebar" :showTable="showTable"></breadcrumb>
-                    <section class="table-area">
+                    <section v-if="totalData > 0" class="table-area">
                         <div class="table-area-container">
 
                         <div class="table-title">
                             All Elephants
                         </div>
-                        <table>
+                        <table >
                             <thead>
                                 <tr class="table-head">
                                     <th>S/N</th>
@@ -23,6 +23,7 @@
                                <table-row @populate-elephant-page="emitSelected" v-for="(elephant, index) in currentPage" :elephant="elephant" :key="index"></table-row>
                             </tbody>
                         </table>
+                        
                     </div>
                     <div class="pagination-container">
                         <div class="page-btn-container">
@@ -30,17 +31,21 @@
                                 Page {{pageNumber}} of {{totalPages}}
                             </div>
                             <div>
-                                <!-- <button>
+                                <button :class="{disabled: pageLeftEndHandler}" @click="decreasePagination">
                                     {{"<"}}
-                                </button> -->
-                                    <button v-for="page in totalPages" :key="page" :value="page" @click="choosePage" >{{page}}</button>
-                                <!-- <button>
+                                </button>
+                                    <button v-for="page in pageBtns" :key="page" :value="page" @click="choosePage" :class="[page == pageNumber ? 'activePageBtn' : null]" >{{page}}</button>
+                                <button :class="{disabled: pageRightEndHandler}" @click="addPagination">
                                     {{">"}}
-                                </button> -->
+                                </button>
                             </div>
                         </div>
                         </div>
                     </section>
+                    <div v-else-if="totalData <= 0" class="loader">
+                            <!-- <img src="../assets/loader.gif" alt="Loader"> -->
+                            <strong>Loading...</strong>
+                    </div>
                 </div>
             </section>
 </template>
@@ -69,6 +74,11 @@
                 totalPages: 0,
                 trimStart: 0,
                 trimEnd: 5,
+                window: 2,
+                maxLeft: 1,
+                maxRight: 2,
+                pageLeftEnd: false,
+                pageRightEnd: false,
             }
         },
         async mounted() {
@@ -89,6 +99,30 @@
                 this.trimEnd = this.trimStart + this.rows
                 console.log(this.trimStart, this.trimEnd);
             },
+            addPagination(){
+                if(this.maxRight >= this.totalPages){
+                    this.pageRightEnd = true
+                    this.pageEnd = true
+                    this.maxLeft = this.totalPages - (this.window - 1)
+                    this.maxRight = this.totalPages
+                }else{
+                    this.pageRightEnd = false
+                    this.maxRight += 1
+                    this.maxLeft += 1
+                }   
+            },
+            decreasePagination(){
+                if(this.maxLeft <= 1){
+                    this.pageLeftEnd = true
+                    this.maxLeft = 1
+                    this.maxRight = 2
+                }else{
+                    this.pageLeftEnd = false
+                    this.maxRight -= 1
+                    this.maxLeft -= 1
+                }
+                console.log(this.maxRightHandler);
+            },
             emitSelected(e){
                 this.$emit("elephant-chosen", e)
             },
@@ -108,7 +142,31 @@
             },
             pageNumber(){
                 return this.current
-            }
+            },
+            maxLeftHandler(){
+                return this.maxLeft
+            },
+            maxRightHandler(){
+                    // if(this.maxLeft <= 1){
+                    // return Number(this.current) + Math.floor(this.window / 2)
+                    // }
+                    return this.maxRight
+            },
+            pageBtns(){
+                return [this.maxLeft, this.maxRightHandler]
+            },
+            pageLeftEndHandler(){
+                if(this.maxLeft < 2){
+                    return true
+                }
+                return false
+            },
+            pageRightEndHandler(){
+                if(this.maxRight >= this.totalPages){
+                    return true
+                }
+                return false
+            },
         }
     }
 </script>
